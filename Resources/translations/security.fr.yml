@@ -1,0 +1,42 @@
+login:
+    title: Connexion
+    email: Email
+    password: Mot de passe
+    submit: Connexion
+    remember_me: Se souvenir de moi
+    lost_password: Mot de passe oublié ?
+
+logout:
+    label: Déconnexion
+
+lost_password:
+    title: Demande de réinitialisation de mot de passe
+    back: Retour à l'écran de connexion
+    submit: Envoyer la demande
+    not_found: Aucun utilisateur correspondant à cet email n'a été trouvé
+    password_changed: La demande de changement de mot de passe à été envoyée à l'adresse saisie.
+
+reset_password:
+    title: Réinitialisation du mot de passe
+    back: Retour à l'écran de connexion
+    submit: Changer le mot de passe
+    token_not_found: Aucun utilisateur n'a été trouvé avec ce token
+    success: Mot de passe changé avec succès, veuillez vous authentifier
+    already_connected: Vous êtes déjà connecté
+
+user:
+    account_creation: Création
+    reset_password: Réinitialiser votre mot de passe
+    already_exists: L'utilisateur '%username%' existe déjà
+    created_success: L'utilisateur '%username%' a été créé avec succès
+    does_not_exists: L'utilisateur '%username%' n'existe pas
+    blank_password_info: Laissez le mot de passe vide pour générer une demande de nouveau mot de passe
+    password_changed_success: Le mot de passe de l'utilisateur '%username%' a bien été modifié
+    password_request_sent: Une demande de changement de mot de passe a été envoyée pour l'utilisateur '%username%'
+    promoted: L'utilisateur '%username%' a été promus super-administrateur
+    demoted: L'utilisateur '%username%' n'est plus super-admin et a été relégué en utilisateur standard
+
+profile:
+    submit: 'Sauvegarder'
+
+unknown_error: 'Erreur inconnue'

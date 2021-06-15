@@ -1,0 +1,8 @@
+{% for name in ['error', 'warning', 'success', 'info'] %}
+    {% for message in app.session.flashBag.get(name) %}
+        <div class="alert alert-{{ name == 'error' ? 'danger' : name }}">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message|raw }}
+        </div>
+    {% endfor %}
+{% endfor %}

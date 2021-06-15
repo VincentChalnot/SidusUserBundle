@@ -1,0 +1,36 @@
+<form method="post" accept-charset="UTF-8" role="form"
+      aria-label="{{ 'login.title'|trans({}, 'security') }}">
+    <fieldset {% if error %}class="has-error"{% endif %}>
+        {% block login_form_fields %}
+            <div class="form-group">
+                <input class="form-control" placeholder="{{ 'login.email'|trans({}, 'security') }}"
+                       name="_username" type="text" value="{{ last_username }}" required="required"
+                       autocapitalize="off" autocorrect="off" spellcheck="false">
+            </div>
+            <div class="form-group">
+                <input class="form-control" placeholder="{{ 'login.password'|trans({}, 'security') }}"
+                       name="_password" type="password" value="" required="required">
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        {% endblock %}
+        {% block login_errors %}
+            {% if error %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+        {% endblock %}
+    </fieldset>
+    <fieldset>
+        {% block login_actions %}
+            <p class="text-right">
+                <a href="{{ path('sidus.user.lost_password') }}" class="text-muted">
+                    {{ 'login.lost_password'|trans({}, 'security') }}
+                </a>
+            </p>
+            <input class="btn btn-dark btn-block" type="submit" id="_submit" name="_submit"
+                   value="{{ 'login.submit'|trans({}, 'security') }}">
+        {% endblock %}
+    </fieldset>
+</form>
+

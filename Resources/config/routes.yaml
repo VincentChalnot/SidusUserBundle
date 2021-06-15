@@ -1,0 +1,23 @@
+sidus.user.login:
+    path: /login
+    controller: Sidus\UserBundle\Action\LoginAction
+
+sidus.user.login_check:
+    path: /login_check
+    controller: Sidus\UserBundle\Action\LoginAction
+
+sidus.user.logout:
+    path: /logout
+    controller: Sidus\UserBundle\Action\LogoutAction
+
+sidus.user.lost_password:
+    path: /login/lost-password
+    controller: Sidus\UserBundle\Action\LostPasswordAction
+
+sidus.user.reset_password:
+    path: /login/reset-password
+    controller: Sidus\UserBundle\Action\ResetPasswordAction
+
+sidus.user.profile:
+    path: /profile
+    controller: Sidus\UserBundle\Action\EditUserProfileAction

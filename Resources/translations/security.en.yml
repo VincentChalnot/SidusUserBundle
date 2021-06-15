@@ -1,0 +1,42 @@
+login:
+    title: Sign in
+    email: Email
+    password: Password
+    submit: Login
+    remember_me: Remember me
+    lost_password: Lost password ?
+
+logout:
+    label: Logout
+
+lost_password:
+    title: Request new password
+    back: Back to login
+    submit: Send request
+    not_found: No user found with this email
+    password_changed: The password change request has been sent to the email
+
+reset_password:
+    title: Reset password
+    back: Back to login
+    submit: Change password
+    token_not_found: No user found with this token
+    success: Password successfully changed, please authenticate yourself
+    already_connected: You are already connected
+
+user:
+    account_creation: Account creation
+    reset_password: Reset your password
+    already_exists: User '%username%' already exists
+    created_success: User '%username%' was successfuly created
+    does_not_exists: User '%username%' does not exists
+    blank_password_info: Leave password blank to generate a new password request
+    password_changed_success: Password updated for user '%username%'
+    password_request_sent: Password request sent for user '%username%'
+    promoted: User '%username%' has been promoted to super-admin
+    demoted: User '%username%' has been demoted from super-admin and is now a regular user
+
+profile:
+    submit: 'Submit'
+
+unknown_error: 'Unknown error'

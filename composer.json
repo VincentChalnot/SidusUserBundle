@@ -1,0 +1,45 @@
+{
+    "name": "sidus/user-bundle",
+    "description": "User management for Symfony 5.3+",
+    "keywords": [
+        "user",
+        "group",
+        "authentication"
+    ],
+    "homepage": "https://github.com/VincentChalnot/SidusUserBundle",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vincent Chalnot",
+            "email": "vincent@sidus.fr",
+            "homepage": "https://sidus.fr",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Sidus\\UserBundle\\": ""
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "symfony/dependency-injection": ">=5.3",
+        "symfony/http-foundation": ">=5.3",
+        "symfony/http-kernel": ">=5.3",
+        "symfony/form": ">=5.3",
+        "symfony/routing": ">=5.3",
+        "symfony/security": ">=5.3",
+        "symfony/translation": ">=5.3",
+        "symfony/console": ">=5.3",
+        "symfony/uid": ">=5.3",
+        "symfony/validator": ">=5.3",
+        "symfony/options-resolver": ">=5.3",
+        "symfony/password-hasher": ">=5.3",
+        "symfony/twig-bridge": ">=5.3",
+        "symfony/mime": ">=5.3",
+        "symfony/mailer": ">=5.3",
+        "doctrine/orm": ">=2.9",
+        "sidus/template-bundle": "~1.0"
+    }
+}

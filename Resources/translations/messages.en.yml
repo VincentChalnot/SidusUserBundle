@@ -1,0 +1,40 @@
+sidus:
+    user:
+        profile:
+            menu:
+                title: User profile
+            title: My user profile
+
+    admin:
+        user:
+            title: Users
+            form:
+                username:
+                    label: Username
+                email:
+                    label: Email
+                password:
+                    label: Password
+                repeat_password:
+                    label: Repeat password
+                enabled:
+                    label: Enabled
+                roles:
+                    label: Roles
+                familyPermissions:
+                    label: Familie's permissions
+                groups:
+                    label: Groups
+
+        group:
+            title: groups
+            form:
+                name:
+                    label: Group name
+                roles:
+                    label: Roles
+
+        action:
+            resetPassword:
+                label: Reset password
+                message: Are you sure you want to reset this user's password?

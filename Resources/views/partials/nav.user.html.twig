@@ -1,0 +1,21 @@
+{% apply spaceless %}
+    <div class="btn-group">
+        <button type="button" class="btn btn-outline-secondary rounded-right" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog align-middle"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="{{ path('sidus.user.profile') }}">
+                <i class="fas fa-user"></i> User profile
+            </a>
+            {# @todo implement actions #}
+            <a class="dropdown-item disabled" href="#">
+                <i class="fas fa-cogs"></i> Settings
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ path('sidus.user.logout') }}">
+                <i class="fas fa-power-off"></i> Logout
+            </a>
+        </div>
+    </div>
+{% endapply %}

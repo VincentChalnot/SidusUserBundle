@@ -1,0 +1,11 @@
+{# @var user \Sidus\UserBundle\Entity\User #}
+{% set resetPath = url('sidus.user.reset_password', {token: user.authenticationToken}) %}
+
+Greetings {{ user }},
+This is a automatic email from {{ company }}: {{ url(homepage_route) }}
+
+Your account has been created, please click on the following link to create your password:
+
+{{ resetPath }}
+
+If you are experiencing any issue, please contact the support: {{ support.address }}
