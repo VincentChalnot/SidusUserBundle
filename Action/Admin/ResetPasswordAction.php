@@ -17,12 +17,13 @@ use Sidus\AdminBundle\Action\ActionInjectableInterface;
 use Sidus\AdminBundle\Action\ActionInjectableTrait;
 use Sidus\AdminBundle\Doctrine\DoctrineHelper;
 use Sidus\AdminBundle\Form\FormHelper;
+use Sidus\AdminBundle\Request\ActionResponseInterface;
+use Sidus\AdminBundle\Request\RedirectActionResponse;
 use Sidus\AdminBundle\Routing\RoutingHelper;
 use Sidus\AdminBundle\Templating\TemplatingHelper;
 use Sidus\UserBundle\Domain\Manager\UserManagerInterface;
 use Sidus\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('ROLE_ADMIN')")
@@ -40,7 +41,7 @@ class ResetPasswordAction implements ActionInjectableInterface
     ) {
     }
 
-    public function __invoke(Request $request, User $user): Response
+    public function __invoke(Request $request, User $user): ActionResponseInterface
     {
         $form = $this->formHelper->getEmptyForm($this->action, $request);
 
@@ -49,8 +50,8 @@ class ResetPasswordAction implements ActionInjectableInterface
             $this->userManager->requestNewPassword($user);
             $this->doctrineHelper->addFlash($this->action, $request->getSession());
 
-            return $this->routingHelper->redirectToAction(
-                $this->action->getAdmin()->getAction(
+            return new RedirectActionResponse(
+                action: $this->action->getAdmin()->getAction(
                     $this->action->getOption('redirect_action', 'list')
                 )
             );

@@ -17,12 +17,13 @@ use Sidus\AdminBundle\Action\ActionInjectableInterface;
 use Sidus\AdminBundle\Action\ActionInjectableTrait;
 use Sidus\AdminBundle\Doctrine\DoctrineHelper;
 use Sidus\AdminBundle\Form\FormHelper;
+use Sidus\AdminBundle\Request\ActionResponseInterface;
+use Sidus\AdminBundle\Request\RedirectActionResponse;
 use Sidus\AdminBundle\Routing\RoutingHelper;
 use Sidus\AdminBundle\Templating\TemplatingHelper;
 use Sidus\UserBundle\Domain\Manager\UserManagerInterface;
 use Sidus\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Security("is_granted('create', _admin.getEntity())")
@@ -40,7 +41,7 @@ class CreateAction implements ActionInjectableInterface
     ) {
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ActionResponseInterface
     {
         $form = $this->formHelper->getForm($this->action, $request, new User(''));
 
@@ -50,12 +51,12 @@ class CreateAction implements ActionInjectableInterface
             $this->userManager->save($data);
             $this->doctrineHelper->addFlash($this->action, $request->getSession());
 
-            return $this->routingHelper->redirectToEntity(
-                $this->action->getAdmin()->getAction(
+            return new RedirectActionResponse(
+                action: $this->action->getAdmin()->getAction(
                     $this->action->getOption('redirect_action', 'edit')
                 ),
-                $data,
-                $request->query->all()
+                entity: $data,
+                parameters: $request->query->all(),
             );
         }
 
