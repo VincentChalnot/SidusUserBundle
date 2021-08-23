@@ -33,6 +33,8 @@ class GroupType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'sidus.admin.group.form.name.label',
+                    'required' => true,
+                    'empty_data' => '',
                 ]
             )
             ->add(

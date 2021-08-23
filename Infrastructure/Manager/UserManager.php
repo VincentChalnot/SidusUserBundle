@@ -57,7 +57,8 @@ class UserManager implements UserManagerInterface
 
     public function createUser(string $email): AdvancedUserInterface
     {
-        $user = new User($email);
+        $user = new User();
+        $user->setEmail($email);
         $violations = $this->validator->validate($user);
         if ($violations->count() > 0) {
             throw BadUsernameException::createFromViolations($violations);

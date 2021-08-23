@@ -77,7 +77,7 @@ class CreateUserCommand extends Command
             return static::FAILURE;
         }
 
-        $user->setSuperAdmin($input->getOption('admin'));
+        $user->setAdmin($input->getOption('admin'));
         $password = $this->helper->getPassword($input, $output);
         if ($password) {
             $this->userManager->setPlainTextPassword($user, $password);

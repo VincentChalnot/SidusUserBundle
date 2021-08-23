@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 interface AdvancedUserInterface extends PasswordAuthenticatedUserInterface, UserInterface, EquatableInterface
 {
     public const ROLE_USER = 'ROLE_USER';
-    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     public function hasRole(string $role): bool;
 
@@ -32,7 +32,7 @@ interface AdvancedUserInterface extends PasswordAuthenticatedUserInterface, User
 
     public function setPassword(string $password): void;
 
-    public function isSuperAdmin(): bool;
+    public function isAdmin(): bool;
 
-    public function setSuperAdmin(bool $status): void;
+    public function setAdmin(bool $status): void;
 }

@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Sidus\UserBundle\Entity;
 
+use Sidus\UserBundle\Model\AdvancedUserInterface;
+
 /**
  * Simplify role handling
  */
@@ -22,7 +24,7 @@ trait RoleCollectionTrait
         $roles = $this->roles;
 
         // we need to make sure to have at least the user role
-        $roles[] = static::ROLE_USER;
+        $roles[] = AdvancedUserInterface::ROLE_USER;
 
         return array_unique($roles);
     }
@@ -35,7 +37,7 @@ trait RoleCollectionTrait
     public function addRole(string $role): void
     {
         $role = strtoupper($role);
-        if (static::ROLE_USER === $role) {
+        if (AdvancedUserInterface::ROLE_USER === $role) {
             return;
         }
 
@@ -53,17 +55,17 @@ trait RoleCollectionTrait
         }
     }
 
-    public function isSuperAdmin(): bool
+    public function isAdmin(): bool
     {
-        return $this->hasRole(static::ROLE_SUPER_ADMIN);
+        return $this->hasRole(AdvancedUserInterface::ROLE_ADMIN);
     }
 
-    public function setSuperAdmin(bool $status): void
+    public function setAdmin(bool $status): void
     {
         if (true === $status) {
-            $this->addRole(static::ROLE_SUPER_ADMIN);
+            $this->addRole(AdvancedUserInterface::ROLE_ADMIN);
         } else {
-            $this->removeRole(static::ROLE_SUPER_ADMIN);
+            $this->removeRole(AdvancedUserInterface::ROLE_ADMIN);
         }
     }
 
@@ -81,7 +83,7 @@ trait RoleCollectionTrait
     {
         $roles = [];
         foreach ($this->getRoles() as $role) {
-            if (static::ROLE_USER === $role) {
+            if (AdvancedUserInterface::ROLE_USER === $role) {
                 continue;
             }
             $role = strtolower(str_replace('ROLE_', '', $role));

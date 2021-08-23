@@ -34,10 +34,10 @@ class Group
     protected string $identifier;
 
     #[ORM\Column(type: 'string', unique: true)]
-    protected string $name;
+    protected ?string $name = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    protected \DateTimeInterface $createdAt;
+    protected \DateTimeInterface $creationDate;
 
     /**
      * @var Collection<User>
@@ -48,11 +48,10 @@ class Group
     #[ORM\Column(type: 'json')]
     protected array $roles = [];
 
-    public function __construct(string $name)
+    public function __construct()
     {
-        $this->name = $name;
         $this->identifier = (new Ulid())->toRfc4122();
-        $this->createdAt = new DateTime();
+        $this->creationDate = new \DateTimeImmutable();
         $this->users = new ArrayCollection();
     }
 
@@ -61,19 +60,19 @@ class Group
         return $this->identifier;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreationDate(): \DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->creationDate;
     }
 
     public function getUsers(): ArrayCollection|Collection
@@ -93,6 +92,6 @@ class Group
 
     public function __toString(): string
     {
-        return $this->getName();
+        return (string) $this->getName();
     }
 }

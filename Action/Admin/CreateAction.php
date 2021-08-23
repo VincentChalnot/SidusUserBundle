@@ -43,7 +43,7 @@ class CreateAction implements ActionInjectableInterface
 
     public function __invoke(Request $request): ActionResponseInterface
     {
-        $form = $this->formHelper->getForm($this->action, $request, new User(''));
+        $form = $this->formHelper->getForm($this->action, $request, new User());
 
         $form->handleRequest($request);
         $data = $form->getData();

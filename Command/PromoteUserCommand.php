@@ -21,7 +21,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Promote users or remove their super admin role
+ * Promote users or remove their admin role
  *
  * @author Vincent Chalnot <vincent@sidus.fr>
  */
@@ -40,9 +40,9 @@ class PromoteUserCommand extends Command
         $this
             ->setName('sidus:user:promote')
             ->setAliases(['user:promote'])
-            ->setDescription('Promote a user to the super admin role')
+            ->setDescription('Promote a user to the admin role')
             ->addArgument('username', InputArgument::OPTIONAL, 'The username of the user')
-            ->addOption('demote', 'd', InputOption::VALUE_NONE, 'Disable the super admin role');
+            ->addOption('demote', 'd', InputOption::VALUE_NONE, 'Disable the admin role');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): ?int
@@ -53,13 +53,13 @@ class PromoteUserCommand extends Command
             return static::FAILURE;
         }
 
-        $user->setSuperAdmin(!$input->getOption('demote'));
+        $user->setAdmin(!$input->getOption('demote'));
         $this->userManager->save($user);
 
-        if ($user->isSuperAdmin()) {
-            $output->writeln("<info>User {$username} was promoted to super admin</info>");
+        if ($user->isAdmin()) {
+            $output->writeln("<info>User {$username} was promoted to admin</info>");
         } else {
-            $output->writeln("<info>User {$username} was demoted from super admin</info>");
+            $output->writeln("<info>User {$username} was demoted from admin</info>");
         }
 
         return static::SUCCESS;

@@ -30,7 +30,7 @@ class User implements AdvancedUserInterface
     protected DateTimeImmutable $creationDate;
 
     #[ORM\Column(type: 'string', unique: true)]
-    protected string $email;
+    protected ?string $email = null;
 
     #[ORM\Column(type: 'json')]
     protected array $roles = [];
@@ -62,9 +62,8 @@ class User implements AdvancedUserInterface
     #[ORM\InverseJoinColumn(name: 'group_ulid', referencedColumnName: 'identifier')]
     protected Collection $groups;
 
-    public function __construct(string $email)
+    public function __construct()
     {
-        $this->email = $email;
         $this->identifier = (new Ulid())->toRfc4122();
         $this->creationDate = new DateTimeImmutable();
         $this->groups = new ArrayCollection();
@@ -76,7 +75,7 @@ class User implements AdvancedUserInterface
         return $this->identifier;
     }
 
-    public function getUserIdentifier(): string
+    public function getUserIdentifier(): ?string
     {
         return $this->getUsername();
     }
@@ -91,7 +90,7 @@ class User implements AdvancedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
@@ -101,7 +100,7 @@ class User implements AdvancedUserInterface
      *
      * @see UserInterface
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->email;
     }
@@ -115,10 +114,12 @@ class User implements AdvancedUserInterface
 
         $groupRoles = [];
         foreach ($this->getGroups() as $group) {
-            $groupRoles[] = $group->getRoles();
+            foreach ($group->getRoles() as $role) {
+                $roles[] = $role;
+            }
         }
 
-        return array_unique(array_merge($roles, $groupRoles));
+        return array_unique($roles);
     }
 
     /**
@@ -253,7 +254,7 @@ class User implements AdvancedUserInterface
 
     public function __toString(): string
     {
-        return $this->getUsername();
+        return (string) $this->getUsername();
     }
 
     public function isEqualTo(UserInterface $user): bool
