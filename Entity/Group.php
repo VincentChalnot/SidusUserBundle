@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Sidus\UserBundle\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,6 +29,10 @@ class Group
     use RoleCollectionTrait;
 
     #[ORM\Id]
+    #[ORM\Column(type: 'bigint')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
+
     #[ORM\Column(type: 'guid', length: 16, unique: true)]
     protected string $identifier;
 
@@ -37,7 +40,7 @@ class Group
     protected ?string $name = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    protected \DateTimeInterface $creationDate;
+    protected \DateTimeInterface $createdAt;
 
     /**
      * @var Collection<User>
@@ -51,8 +54,13 @@ class Group
     public function __construct()
     {
         $this->identifier = (new Ulid())->toRfc4122();
-        $this->creationDate = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
         $this->users = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getIdentifier(): string
@@ -70,9 +78,9 @@ class Group
         $this->name = $name;
     }
 
-    public function getCreationDate(): \DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
-        return $this->creationDate;
+        return $this->createdAt;
     }
 
     public function getUsers(): ArrayCollection|Collection

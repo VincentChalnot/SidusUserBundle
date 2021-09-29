@@ -16,18 +16,22 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'sidus_user')]
 #[ORM\Index(columns: ['email'], name: 'sidus_user_email_idx')]
-#[ORM\Index(columns: ['creation_date'], name: 'sidus_user_creation_date_idx')]
+#[ORM\Index(columns: ['created_at'], name: 'sidus_user_created_at_idx')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class User implements AdvancedUserInterface
 {
     use RoleCollectionTrait;
 
     #[ORM\Id]
+    #[ORM\Column(type: 'bigint')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
+
     #[ORM\Column(type: 'guid', length: 16, unique: true)]
     protected string $identifier;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    protected DateTimeImmutable $creationDate;
+    protected DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: 'string', unique: true)]
     protected ?string $email = null;
@@ -58,16 +62,21 @@ class User implements AdvancedUserInterface
      */
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
     #[ORM\JoinTable(name: 'sidus_user_group')]
-    #[ORM\JoinColumn(name: 'user_identifier', referencedColumnName: 'identifier')]
-    #[ORM\InverseJoinColumn(name: 'group_ulid', referencedColumnName: 'identifier')]
+    #[ORM\JoinColumn(name: 'user_id')]
+    #[ORM\InverseJoinColumn(name: 'group_id')]
     protected Collection $groups;
 
     public function __construct()
     {
         $this->identifier = (new Ulid())->toRfc4122();
-        $this->creationDate = new DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
         $this->groups = new ArrayCollection();
         $this->resetAuthenticationToken();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getIdentifier(): string
@@ -80,9 +89,9 @@ class User implements AdvancedUserInterface
         return $this->getUsername();
     }
 
-    public function getCreationDate(): ?DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->creationDate;
+        return $this->createdAt;
     }
 
     public function getEmail(): ?string

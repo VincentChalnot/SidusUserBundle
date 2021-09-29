@@ -1,6 +1,9 @@
 Sidus\UserBundle\Entity\User:
     constraints:
         -   Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                fields: id
+                errorPath: id
+        -   Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
                 fields: identifier
                 errorPath: identifier
         -   Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
