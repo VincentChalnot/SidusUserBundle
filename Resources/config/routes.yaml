@@ -20,4 +20,8 @@ sidus.user.reset_password:
 
 sidus.user.profile:
     path: /profile
-    controller: Sidus\UserBundle\Action\EditUserProfileAction
+    controller: Sidus\UserBundle\Action\Profile\EditAction
+
+sidus.user.profile.change_password:
+    path: /profile/change-password
+    controller: Sidus\UserBundle\Action\Profile\ChangePasswordAction

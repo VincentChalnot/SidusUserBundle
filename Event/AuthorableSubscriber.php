@@ -12,15 +12,15 @@ declare(strict_types=1);
 
 namespace Sidus\UserBundle\Event;
 
-use Sidus\UserBundle\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Sidus\UserBundle\Model\AuthorableInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @see AuthorableInterface
+ * @see    AuthorableInterface
  *
  * @author Vincent Chalnot <vincent@sidus.fr>
  */
@@ -54,7 +54,7 @@ class AuthorableSubscriber implements EventSubscriber
             return;
         }
         $user = $token->getUser();
-        if (!$user instanceof User) {
+        if (!$user instanceof UserInterface) {
             return;
         }
         if (!$entity->getCreatedBy()) {

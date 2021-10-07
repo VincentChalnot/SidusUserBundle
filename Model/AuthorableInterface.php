@@ -29,11 +29,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 interface AuthorableInterface
 {
-    public function getUpdatedBy(): UserInterface;
+    public function getUpdatedBy(): ?UserInterface;
 
-    public function setUpdatedBy(UserInterface $user): void;
+    public function setUpdatedBy(?UserInterface $user): void;
 
-    public function getCreatedBy(): UserInterface;
+    public function getCreatedBy(): ?UserInterface;
 
-    public function setCreatedBy(UserInterface $user): void;
+    public function setCreatedBy(?UserInterface $user): void;
 }

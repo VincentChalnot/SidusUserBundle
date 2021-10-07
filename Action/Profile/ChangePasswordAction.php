@@ -10,9 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Sidus\UserBundle\Action;
+namespace Sidus\UserBundle\Action\Profile;
 
 use Sidus\UserBundle\Domain\Manager\UserManagerInterface;
+use Sidus\UserBundle\Form\Type\UserPasswordType;
 use Sidus\UserBundle\Form\Type\UserProfileType;
 use Sidus\UserBundle\Model\AdvancedUserInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -24,9 +25,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Expose a form to edit user profile
+ * Expose a form to change user own's password
  */
-class EditUserProfileAction
+class ChangePasswordAction
 {
     public function __construct(
         protected UserManagerInterface $userManager,
@@ -42,11 +43,13 @@ class EditUserProfileAction
         }
         $form = $this->formFactory->createNamed(
             'user_profile',
-            UserProfileType::class,
-            $user,
+            UserPasswordType::class,
+            [
+                'email' => $user->getUserIdentifier(),
+            ],
             [
                 'label' => 'user.profile.title',
-                'action' => $this->urlGenerator->generate('sidus.user.profile'),
+                'action' => $this->urlGenerator->generate('sidus.user.profile.change_password'),
                 'attr' => [
                     'novalidate' => 'novalidate',
                 ],
@@ -56,6 +59,7 @@ class EditUserProfileAction
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->userManager->setPlainTextPassword($user, $form->getData()['password']);
             $this->userManager->save($user);
 
             $session = $request->getSession();
@@ -63,7 +67,7 @@ class EditUserProfileAction
                 $session->getFlashBag()->add('success', 'sidus.user.flash.edit.success');
             }
 
-            return new RedirectResponse($this->urlGenerator->generate('sidus.user.profile'));
+            return new RedirectResponse($this->urlGenerator->generate('sidus.user.profile.change_password'));
         }
 
         return [
