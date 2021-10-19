@@ -12,8 +12,10 @@ declare(strict_types=1);
 
 namespace Sidus\UserBundle\Mailer;
 
-use Sidus\UserBundle\Model\Configuration\UserConfiguration;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Sidus\UserBundle\Model\AdvancedUserInterface;
+use Sidus\UserBundle\Model\Configuration\UserConfiguration;
+use Sidus\UserBundle\Model\Event\MailEvent;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -30,27 +32,20 @@ class UserMailer
         protected MailerInterface $mailer,
         protected Environment $twig,
         protected TranslatorInterface $translator,
-        protected UserConfiguration $configuration
+        protected UserConfiguration $configuration,
+        protected EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
     public function sendNewUserMail(AdvancedUserInterface $user): void
     {
         $parameters = [
-            'homepage_route' => $this->configuration->getHomeRoute(),
-            'user' => $user,
-            'support' => $this->configuration->getSupportAddress(),
             'subject' => $this->translator->trans('user.account_creation', [], 'security'),
-            'company' => $this->configuration->getCompanyTitle(),
         ];
 
-        $message = (new TemplatedEmail())
+        $message = $this->createEmail($user, $parameters)
             ->textTemplate($this->configuration->getNewUserTextTemplate())
-            ->htmlTemplate($this->configuration->getNewUserHtmlTemplate())
-            ->context($parameters)
-            ->from($this->configuration->getMailerFrom())
-            ->subject($parameters['subject'])
-            ->addTo($user->getEmail());
+            ->htmlTemplate($this->configuration->getNewUserHtmlTemplate());
 
         $this->mailer->send($message);
     }
@@ -58,21 +53,37 @@ class UserMailer
     public function sendResetPasswordMail(AdvancedUserInterface $user): void
     {
         $parameters = [
-            'homepage_route' => $this->configuration->getHomeRoute(),
-            'user' => $user,
-            'support' => $this->configuration->getSupportAddress(),
             'subject' => $this->translator->trans('user.reset_password', [], 'security'),
-            'company' => $this->configuration->getCompanyTitle(),
         ];
 
-        $message = (new TemplatedEmail())
+        $message = $this->createEmail($user, $parameters)
             ->textTemplate($this->configuration->getResetPasswordTextTemplate())
-            ->htmlTemplate($this->configuration->getResetPasswordHtmlTemplate())
+            ->htmlTemplate($this->configuration->getResetPasswordHtmlTemplate());
+
+        $this->mailer->send($message);
+    }
+
+    protected function createEmail(AdvancedUserInterface $user, array $parameters): TemplatedEmail
+    {
+        $parameters = array_merge(
+            [
+                'homepage_route' => $this->configuration->getHomeRoute(),
+                'user' => $user,
+                'support' => $this->configuration->getSupportAddress(),
+                'company' => $this->configuration->getCompanyTitle(),
+            ],
+            $parameters
+        );
+
+        $message = (new TemplatedEmail())
             ->context($parameters)
             ->from($this->configuration->getMailerFrom())
             ->subject($parameters['subject'])
             ->addTo($user->getEmail());
 
-        $this->mailer->send($message);
+        $event = new MailEvent($message);
+        $this->eventDispatcher->dispatch($event);
+
+        return $message;
     }
 }
