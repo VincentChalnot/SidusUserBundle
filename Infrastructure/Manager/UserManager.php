@@ -36,12 +36,12 @@ class UserManager implements UserManagerInterface
     protected EntityManagerInterface $entityManager;
 
     public function __construct(
+        ManagerRegistry $doctrine,
         protected UserProviderInterface $userProvider,
         protected UserPasswordHasherInterface $passwordHasher,
         protected ValidatorInterface $validator,
-        protected UserMailer $userMailer,
         protected LoggerInterface $logger,
-        ManagerRegistry $doctrine
+        protected ?UserMailer $userMailer = null,
     ) {
         $entityManager = $doctrine->getManagerForClass(User::class);
         if (!$entityManager instanceof EntityManagerInterface) {
@@ -89,15 +89,17 @@ class UserManager implements UserManagerInterface
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        if ($user->isNew() && !$user->getEmailSentAt()) {
-            $this->userMailer->sendNewUserMail($user);
-            $user->setEmailSentAt(new \DateTimeImmutable());
-            $this->entityManager->flush();
-        }
-        if ($user->getPasswordRequestedAt() && !$user->getEmailSentAt()) {
-            $this->userMailer->sendResetPasswordMail($user);
-            $user->setEmailSentAt(new \DateTimeImmutable());
-            $this->entityManager->flush();
+        if ($this->userMailer) {
+            if ($user->isNew() && !$user->getEmailSentAt()) {
+                $this->userMailer->sendNewUserMail($user);
+                $user->setEmailSentAt(new \DateTimeImmutable());
+                $this->entityManager->flush();
+            }
+            if ($user->getPasswordRequestedAt() && !$user->getEmailSentAt()) {
+                $this->userMailer->sendResetPasswordMail($user);
+                $user->setEmailSentAt(new \DateTimeImmutable());
+                $this->entityManager->flush();
+            }
         }
     }
 

@@ -23,7 +23,7 @@ class User implements AdvancedUserInterface
     use RoleCollectionTrait;
 
     #[ORM\Id]
-    #[ORM\Column(type: 'bigint')]
+    #[ORM\Column(type: 'bigint', options: ['unsigned' => true])]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 

@@ -38,5 +38,12 @@ class SidusUserExtension extends Extension
             UserConfiguration::class,
             new Definition(UserConfiguration::class, ['$config' => $config])
         );
+
+        if ($config['enable_admin']) {
+            $loader->load('admin.yaml');
+        }
+        if (!empty($config['mailer'])) {
+            $loader->load('mailer.yaml');
+        }
     }
 }

@@ -27,8 +27,6 @@
         "symfony/dependency-injection": ">=5.3",
         "symfony/http-foundation": ">=5.3",
         "symfony/http-kernel": ">=5.3",
-        "symfony/form": ">=5.3",
-        "symfony/routing": ">=5.3",
         "symfony/security-core": ">=5.3",
         "symfony/translation": ">=5.3",
         "symfony/console": ">=5.3",
@@ -36,10 +34,14 @@
         "symfony/validator": ">=5.3",
         "symfony/options-resolver": ">=5.3",
         "symfony/password-hasher": ">=5.3",
-        "symfony/twig-bridge": ">=5.3",
-        "symfony/mime": ">=5.3",
-        "symfony/mailer": ">=5.3",
         "doctrine/orm": ">=2.9",
-        "sidus/template-bundle": "~1.0"
+    },
+    "suggest": {
+        "symfony/mailer": "Required to send mail to users",
+        "symfony/mime": "Required to send mail to users",
+        "symfony/routing": "Required for admin",
+        "sidus/template-bundle": "Required for admin",
+        "symfony/twig-bridge": "Required for admin",
+        "symfony/form": "Required for admin"
     }
 }

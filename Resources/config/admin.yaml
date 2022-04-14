@@ -1,0 +1,10 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Sidus\UserBundle\Action\:
+        resource: '../../Action/'
+        tags:
+            - controller.service_arguments

@@ -9,12 +9,7 @@ services:
 
     Sidus\UserBundle\:
         resource: '../../'
-        exclude: '../../{Debug,DependencyInjection,Entity,Model}'
-
-    Sidus\UserBundle\Action\:
-        resource: '../../Action/'
-        tags:
-            - controller.service_arguments
+        exclude: '../../{Debug,DependencyInjection,Entity,Model,Mailer}'
 
     security.role_hierarchy:
         alias: Sidus\UserBundle\Security\Core\Role\RoleHierarchy
