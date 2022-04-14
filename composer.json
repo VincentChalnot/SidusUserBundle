@@ -34,7 +34,7 @@
         "symfony/validator": ">=5.3",
         "symfony/options-resolver": ">=5.3",
         "symfony/password-hasher": ">=5.3",
-        "doctrine/orm": ">=2.9",
+        "doctrine/orm": ">=2.9"
     },
     "suggest": {
         "symfony/mailer": "Required to send mail to users",
