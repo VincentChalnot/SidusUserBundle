@@ -84,9 +84,10 @@ class User implements AdvancedUserInterface
         return $this->identifier;
     }
 
-    public function getUserIdentifier(): ?string
+    public function getUserIdentifier(): string
     {
-        return $this->getUsername();
+        return $this->getUsername()
+            ?? throw new \LogicException('User::getUserIdentifier is unsupported before user initialization');
     }
 
     public function getCreatedAt(): ?DateTimeImmutable
