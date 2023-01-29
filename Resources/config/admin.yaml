@@ -4,7 +4,7 @@ services:
         autowire: true
         autoconfigure: true
 
-    Sidus\UserBundle\Action\:
-        resource: '../../Action/'
+    Sidus\UserBundle\Action\Admin:
+        resource: '../../Action/Admin/'
         tags:
             - controller.service_arguments
