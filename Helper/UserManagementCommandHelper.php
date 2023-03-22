@@ -51,8 +51,7 @@ class UserManagementCommandHelper
     public function findUser(OutputInterface $output, string $username): ?AdvancedUserInterface
     {
         try {
-            /** @noinspection PhpIncompatibleReturnTypeInspection */
-            return $this->userManager->loadUserByIdentifier($username);
+            return $this->userManager->findByUsername($username);
         } catch (UserNotFoundException) {
             $output->writeln("<error>User '{$username}' does not exist</error>");
 

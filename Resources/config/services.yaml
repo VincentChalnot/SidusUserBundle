@@ -4,7 +4,6 @@ services:
         autowire: true
         autoconfigure: true
         bind:
-            $userProvider: '@Sidus\UserBundle\Security\UserProvider'
             $hierarchy: '%security.role_hierarchy.roles%'
 
     Sidus\UserBundle\:

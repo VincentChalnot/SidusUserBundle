@@ -4,7 +4,9 @@ sidus.user.login:
 
 sidus.user.login_check:
     path: /login_check
-    controller: Sidus\UserBundle\Action\LoginAction
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    defaults:
+        route: sidus.user.login
 
 sidus.user.logout:
     path: /logout

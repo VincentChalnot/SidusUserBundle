@@ -22,8 +22,7 @@ use Sidus\UserBundle\Exception\BadUsernameException;
 use Sidus\UserBundle\Mailer\UserMailer;
 use Sidus\UserBundle\Model\AdvancedUserInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -37,7 +36,6 @@ class UserManager implements UserManagerInterface
 
     public function __construct(
         ManagerRegistry $doctrine,
-        protected UserProviderInterface $userProvider,
         protected UserPasswordHasherInterface $passwordHasher,
         protected ValidatorInterface $validator,
         protected LoggerInterface $logger,
@@ -50,15 +48,20 @@ class UserManager implements UserManagerInterface
         $this->entityManager = $entityManager;
     }
 
-    public function loadUserByIdentifier(string $identifier): UserInterface
+    public function findByUsername(string $username): AdvancedUserInterface
     {
-        return $this->userProvider->loadUserByIdentifier($identifier);
+        $user = $this->getRepository()->findOneBy(['email' => $username]);
+        if (!$user) {
+            throw new UserNotFoundException("No user for email: {$username}");
+        }
+
+        return $user;
     }
 
-    public function createUser(string $email): AdvancedUserInterface
+    public function createUser(string $username): AdvancedUserInterface
     {
         $user = new User();
-        $user->setEmail($email);
+        $user->setEmail($username);
         $violations = $this->validator->validate($user);
         if ($violations->count() > 0) {
             throw BadUsernameException::createFromViolations($violations);
@@ -109,12 +112,6 @@ class UserManager implements UserManagerInterface
         $this->entityManager->flush();
     }
 
-    public function loadUserByUsername(string $username): AdvancedUserInterface
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->userProvider->loadUserByIdentifier($username);
-    }
-
     public function loadUserByToken(string $token): ?AdvancedUserInterface
     {
         return $this->getRepository()->findOneBy(
@@ -124,20 +121,8 @@ class UserManager implements UserManagerInterface
         );
     }
 
-    public function refreshUser(UserInterface $user): AdvancedUserInterface
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->userProvider->refreshUser($user);
-    }
-
-    public function supportsClass(string $class): bool
-    {
-        return $this->userProvider->supportsClass($class);
-    }
-
     protected function getRepository(): EntityRepository
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->entityManager->getRepository(User::class);
     }
 }

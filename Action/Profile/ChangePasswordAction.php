@@ -14,7 +14,6 @@ namespace Sidus\UserBundle\Action\Profile;
 
 use Sidus\UserBundle\Domain\Manager\UserManagerInterface;
 use Sidus\UserBundle\Form\Type\UserPasswordType;
-use Sidus\UserBundle\Form\Type\UserProfileType;
 use Sidus\UserBundle\Model\AdvancedUserInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

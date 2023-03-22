@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Ulid;
 
-#[ORM\Entity()]
+#[ORM\Entity]
 #[ORM\Table(name: 'sidus_group')]
 #[ORM\Index(columns: ['name'], name: 'sidus_group_name_idx')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]

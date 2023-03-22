@@ -121,8 +121,6 @@ class User implements AdvancedUserInterface
 
         // we need to make sure to have at least the user role
         $roles[] = static::ROLE_USER;
-
-        $groupRoles = [];
         foreach ($this->getGroups() as $group) {
             foreach ($group->getRoles() as $role) {
                 $roles[] = $role;

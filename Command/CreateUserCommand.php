@@ -58,7 +58,7 @@ class CreateUserCommand extends Command
         $username = $this->helper->getUsername($input, $output);
         if ($input->getOption('if-not-exists')) {
             try {
-                $user = $this->userManager->loadUserByUsername($username);
+                $user = $this->userManager->findByUsername($username);
             } catch (\Exception) {
                 $user = null;
             }

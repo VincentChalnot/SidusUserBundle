@@ -63,7 +63,7 @@ class LostPasswordAction
         if ($form->isSubmitted() && $form->isValid()) {
             $user = null;
             try {
-                $user = $this->userManager->loadUserByIdentifier($form->get('email')->getData());
+                $user = $this->userManager->findByUsername($form->get('email')->getData());
             } catch (UserNotFoundException) {
                 $error = 'lost_password.not_found';
             } catch (\Exception $e) {
