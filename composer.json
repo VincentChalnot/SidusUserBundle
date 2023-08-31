@@ -1,6 +1,6 @@
 {
     "name": "sidus/user-bundle",
-    "description": "User management for Symfony 5.3+",
+    "description": "User management for Symfony 6.3+",
     "keywords": [
         "user",
         "group",
@@ -23,17 +23,17 @@
         }
     },
     "require": {
-        "php": ">=8.0",
-        "symfony/dependency-injection": ">=5.3",
-        "symfony/http-foundation": ">=5.3",
-        "symfony/http-kernel": ">=5.3",
-        "symfony/security-core": ">=5.3",
-        "symfony/translation": ">=5.3",
-        "symfony/console": ">=5.3",
-        "symfony/uid": ">=5.3",
-        "symfony/validator": ">=5.3",
-        "symfony/options-resolver": ">=5.3",
-        "symfony/password-hasher": ">=5.3",
+        "php": ">=8.1",
+        "symfony/dependency-injection": ">=6.3",
+        "symfony/http-foundation": ">=6.3",
+        "symfony/http-kernel": ">=6.3",
+        "symfony/security-core": ">=6.3",
+        "symfony/translation": ">=6.3",
+        "symfony/console": ">=6.3",
+        "symfony/uid": ">=6.3",
+        "symfony/validator": ">=6.3",
+        "symfony/options-resolver": ">=6.3",
+        "symfony/password-hasher": ">=6.3",
         "doctrine/orm": ">=2.9"
     },
     "suggest": {

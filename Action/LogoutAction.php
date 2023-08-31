@@ -12,9 +12,12 @@ declare(strict_types=1);
 
 namespace Sidus\UserBundle\Action;
 
+use Symfony\Component\HttpKernel\Attribute\AsController;
+
 /**
  * Logout action
  */
+#[AsController]
 class LogoutAction
 {
     public function __invoke()

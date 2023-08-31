@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Sidus\UserBundle\Action\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sidus\AdminBundle\Action\ActionInjectableInterface;
 use Sidus\AdminBundle\Action\ActionInjectableTrait;
 use Sidus\AdminBundle\Doctrine\DoctrineHelper;
@@ -23,11 +22,13 @@ use Sidus\AdminBundle\Routing\RoutingHelper;
 use Sidus\AdminBundle\Templating\TemplatingHelper;
 use Sidus\UserBundle\Domain\Manager\UserManagerInterface;
 use Sidus\UserBundle\Entity\User;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('create', _admin.getEntity())")
- */
+#[AsController]
+#[IsGranted(attribute: 'create', subject: new Expression("request.attributes.get('_admin').getEntity()"))]
 class CreateAction implements ActionInjectableInterface
 {
     use ActionInjectableTrait;

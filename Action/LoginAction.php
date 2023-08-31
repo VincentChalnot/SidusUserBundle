@@ -14,14 +14,16 @@ namespace Sidus\UserBundle\Action;
 
 use Sidus\UserBundle\Model\Configuration\UserConfiguration;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Twig\Environment;
 
 /**
  * Login action with form
  */
+#[AsController]
 class LoginAction
 {
     public function __construct(
