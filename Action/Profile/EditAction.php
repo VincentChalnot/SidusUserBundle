@@ -23,13 +23,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Expose a form to edit user profile
  */
 #[AsController]
-#[IsGranted('ROLE_USER')]
 class EditAction
 {
     public function __construct(

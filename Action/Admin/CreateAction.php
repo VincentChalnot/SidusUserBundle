@@ -19,16 +19,14 @@ use Sidus\AdminBundle\Form\FormHelper;
 use Sidus\AdminBundle\Request\ActionResponseInterface;
 use Sidus\AdminBundle\Request\RedirectActionResponse;
 use Sidus\AdminBundle\Routing\RoutingHelper;
+use Sidus\AdminBundle\Session\FlashHelper;
 use Sidus\AdminBundle\Templating\TemplatingHelper;
 use Sidus\UserBundle\Domain\Manager\UserManagerInterface;
 use Sidus\UserBundle\Entity\User;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[AsController]
-#[IsGranted(attribute: 'create', subject: new Expression("request.attributes.get('_admin').getEntity()"))]
 class CreateAction implements ActionInjectableInterface
 {
     use ActionInjectableTrait;
@@ -39,6 +37,7 @@ class CreateAction implements ActionInjectableInterface
         protected DoctrineHelper $doctrineHelper,
         protected RoutingHelper $routingHelper,
         protected TemplatingHelper $templatingHelper,
+        protected FlashHelper $flashHelper,
     ) {
     }
 
@@ -50,7 +49,7 @@ class CreateAction implements ActionInjectableInterface
         $data = $form->getData();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->userManager->save($data);
-            $this->doctrineHelper->addFlash($this->action, $request->getSession());
+            $this->flashHelper->addFlash($this->action, $request->getSession());
 
             return new RedirectActionResponse(
                 action: $this->action->getAdmin()->getAction(
