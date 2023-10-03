@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Twig\Environment;
 
 /**
  * Login action with form
@@ -30,7 +29,6 @@ class LoginAction
         protected UserConfiguration $configuration,
         protected AuthenticationUtils $authenticationUtils,
         protected Security $security,
-        protected Environment $twig,
         protected UrlGeneratorInterface $urlGenerator,
     ) {
     }
